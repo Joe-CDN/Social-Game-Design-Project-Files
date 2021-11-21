@@ -2,15 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PersistanceManager : MonoBehaviour
 {
     public static PersistanceManager instance { get; private set; }
+
     public AudioClip dropInCauldron;
+    public AudioClip titleMusic;
 
     public int score;
 
-    public Text scoreLabel;
+    public bool useJoystick = false;
+    public bool grabObject = false;
+    public bool playing = false;    
 
     private void Awake()
     {
@@ -23,10 +28,5 @@ public class PersistanceManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
-
-    private void Update()
-    {
-        scoreLabel.text = "Score: " + score;
     }
 }

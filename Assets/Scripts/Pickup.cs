@@ -11,12 +11,13 @@ public class Pickup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && Vector3.Distance(this.transform.position, GameObject.Find("hand").transform.position) <= 2f)
-        {
-            pickedUp = !pickedUp;
-            thirdpersonmovescript.isGrabbing = !thirdpersonmovescript.isGrabbing;
+        if(PersistanceManager.instance.useJoystick == true){
+            pickUpWithUI();
         }
-        if(pickedUp == true && thirdpersonmovescript.isGrabbing == true)
+        else{
+            pickUpWithKey();
+        }
+        if(pickedUp == true && OnlineMove.isGrabbing == true)
         {
             GetComponent<Rigidbody>().useGravity = false;
             GetComponent<Rigidbody>().isKinematic = true;
@@ -37,9 +38,30 @@ public class Pickup : MonoBehaviour
         if (collision.collider.tag.Equals("cauldron"))
         {
             pickedUp = false;
-            this.transform.parent = null;            
-            this.transform.position = respawn.transform.position;
-            this.transform.rotation = respawn.transform.rotation; 
+            Destroy(this.transform.gameObject);
+            //this.transform.parent = null;            
+            //this.transform.position = respawn.transform.position;
+            //this.transform.rotation = respawn.transform.rotation; 
+        }
+    }
+
+    private void pickUpWithKey()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && Vector3.Distance(this.transform.position, GameObject.Find("hand").transform.position) <= 1.5f)
+        {
+            pickedUp = !pickedUp;
+            OnlineMove.isGrabbing = !OnlineMove.isGrabbing;
+        }
+    }
+    private void pickUpWithUI()
+    {
+        if (PersistanceManager.instance.grabObject && Vector3.Distance(this.transform.position, GameObject.Find("hand").transform.position) <= 1.5f)
+        {
+            //pickedUp = PersistanceManager.instance.grabObject;
+            pickedUp = !pickedUp;
+            //OnlineMove.isGrabbing = PersistanceManager.instance.grabObject;
+            OnlineMove.isGrabbing = !OnlineMove.isGrabbing;
+            PersistanceManager.instance.grabObject = false;
         }
     }
 }

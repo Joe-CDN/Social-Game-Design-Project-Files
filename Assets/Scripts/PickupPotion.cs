@@ -9,12 +9,13 @@ public class PickupPotion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && Vector3.Distance(this.transform.position, GameObject.Find("hand").transform.position) <= 2f)
-        {
-            pickedUp = !pickedUp;
-            thirdpersonmovescript.isGrabbing = !thirdpersonmovescript.isGrabbing;
+        if(PersistanceManager.instance.useJoystick == true){
+            pickUpWithUI();
         }
-        if(pickedUp == true)
+        else{
+            pickUpWithKey();
+        }
+        if(pickedUp == true && OnlineMove.isGrabbing == true)
         {
             GetComponent<Rigidbody>().useGravity = false;
             GetComponent<Rigidbody>().isKinematic = true;
@@ -27,6 +28,24 @@ public class PickupPotion : MonoBehaviour
             GetComponent<Rigidbody>().useGravity = true;
             GetComponent<Rigidbody>().isKinematic = false;
             this.transform.parent = null;
+        }
+    }
+
+    private void pickUpWithKey()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && Vector3.Distance(this.transform.position, GameObject.Find("hand").transform.position) <= 1.5f)
+        {
+            pickedUp = !pickedUp;
+            OnlineMove.isGrabbing = !OnlineMove.isGrabbing;
+        }
+    }
+    private void pickUpWithUI()
+    {
+        if (PersistanceManager.instance.grabObject && Vector3.Distance(this.transform.position, GameObject.Find("hand").transform.position) <= 1.5f)
+        {
+            pickedUp = !pickedUp;
+            OnlineMove.isGrabbing = !OnlineMove.isGrabbing;
+            PersistanceManager.instance.grabObject = false;
         }
     }
 }

@@ -22,6 +22,12 @@ TagManager:
   - sadPot
   - timePot
   - truthPot
+  - Bullet
+  - clock
+  - catnip
+  - fluff
+  - DNA
+  - rose
   layers:
   - Default
   - TransparentFX

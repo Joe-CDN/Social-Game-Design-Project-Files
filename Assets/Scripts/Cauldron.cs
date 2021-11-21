@@ -6,6 +6,20 @@ public class Cauldron : MonoBehaviour
 {
     public static float potionTotal;
 
+    [SerializeField]    private GameObject brushPrefab;
+    [SerializeField]    private GameObject waterPrefab;
+    [SerializeField]    private GameObject sugarPrefab;
+    [SerializeField]    private GameObject spicePrefab;
+    [SerializeField]    private GameObject goldPrefab;
+    [SerializeField]    private GameObject fishPrefab;
+    [SerializeField]    private GameObject catnipPrefab;
+    [SerializeField]    private GameObject fluffPrefab;
+    [SerializeField]    private GameObject clockPrefab;
+    [SerializeField]    private GameObject DNAPrefab;
+    [SerializeField]    private GameObject rosePrefab;
+    [SerializeField]    private GameObject morphPrefab;
+    [SerializeField]    private GameObject emotePrefab;
+
     void Start()
     {
         potionTotal = 0;
@@ -26,12 +40,14 @@ public class Cauldron : MonoBehaviour
             potionTotal += 6.71f;
             Debug.Log(potionTotal);
             GetComponent<AudioSource> ().Play ();
+            bucketSpawn.Instance.SpawnFromPool(waterPrefab);
         }
         if (collision.collider.tag.Equals("sugar"))
         {
             potionTotal += 8.59f;
             Debug.Log(potionTotal);
             GetComponent<AudioSource> ().Play ();
+            sugarSpawn.Instance.SpawnFromPool(sugarPrefab);
         }
         if (collision.collider.tag.Equals("spice"))
         {
